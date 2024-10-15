@@ -12,8 +12,7 @@ namespace textanalyzer.Utility
             String result = "Format conversion error";
             Console.WriteLine(inputNumber.Length);
             int counterDots = 0;
-            int counterCommas = 0;
-            int counterUnderscore = 0;
+            int counterCommas = 0;            
 
             if (inputNumber.Length == 9)
             {
@@ -21,25 +20,8 @@ namespace textanalyzer.Utility
             }
 
             if (inputNumber.Length == 10)
-            {                
-                if (inputNumber.Contains("."))
-                {
-                    counterDots = countDots(inputNumber);
-                    //Console.WriteLine("counted dotS: " + counterDots);
-                    if (counterDots == 0 || counterDots == 1)
-                    {                        
-                        inputNumber = inputNumber.Replace(",", "");
-                        inputNumber = replaceDots(inputNumber);                        
-                    }
-                    else
-                    {
-                        //Console.WriteLine("Dots:" + counterDots);
-                        string[] parts = inputNumber.Split('.');
-                        inputNumber = parts[0] + parts[1] + "," + parts[2];                        
-                    }
-                }
-            
-                result = simpleFormatConversition(inputNumber);
+            {
+                result = caseInputLengthTenDigits(ref inputNumber, ref counterDots);
             }
 
             if (inputNumber.Length == 13)
@@ -49,24 +31,7 @@ namespace textanalyzer.Utility
 
             if (inputNumber.Length == 14)
             {
-                counterCommas = countCommas(inputNumber);
-                if (counterCommas == 2)
-                {
-                    string[] parts = inputNumber.Split(',');
-                    inputNumber = parts[0]+parts[1]+parts[2];
-                    inputNumber = inputNumber.Replace(".",",");
-                    result = inputNumber;
-                }
-                else 
-                {
-                    counterDots = countDots(inputNumber);
-                    if (counterDots == 2)
-                    {
-                        string[] parts = inputNumber.Split('.');
-                        inputNumber = parts[0]+ parts[1].Replace(",", "")+","+parts[2];
-                        result = inputNumber;
-                    }
-                }
+                counterCommas = caseInputLengthFourteenDigits(ref inputNumber, ref result, ref counterDots);
             }
 
             if (inputNumber.Length == 15)
@@ -77,80 +42,158 @@ namespace textanalyzer.Utility
                 }
                 else
                 {
-                    if (inputNumber.Contains("_"))
-                    {
-                        counterUnderscore = countUnderScores(inputNumber);
-                        if (counterUnderscore == 4)
-                        {
-                            inputNumber = replaceUnderScore(inputNumber);
-                            result = inputNumber;
-                        }
-                        if (counterUnderscore == 3)
-                        {
-                            inputNumber = replaceUnderScore(inputNumber);
-                            inputNumber = inputNumber.Replace('.', ',');
-                            result = inputNumber;
-                        }
-                    }
-                    else
-                    {
-                        counterDots = countDots(inputNumber);
-                        if (counterDots == 3)
-                        {
-                            string[] parts = inputNumber.Split('.');
-                            inputNumber = parts[0].Replace(",", "") + parts[1] + parts[2] + "," + parts[3];
-                            result = inputNumber;
-                        }
-                        if (counterDots == 2)
-                        {
-                            string[] parts = inputNumber.Split(',');
-                            inputNumber = parts[0] + parts[1].Replace(".", "") + parts[2].Replace(".", ",");
-                            result = inputNumber;
-                        }
-                    }
+                    result = handleSpecialCharacters(inputNumber);
                 }
             }
 
             if (inputNumber.Length == 16)
             {
-                if (inputNumber.Contains("m"))
-                {
-                    counterDots =countDots(inputNumber);
-                    if (counterDots == 3)
-                    {
-                        inputNumber = inputNumber.Replace("m", "");
-                        string[] parts = inputNumber.Split('.');
-                        inputNumber = parts[0].Replace(",", "") + parts[1] + parts[2] + "," + parts[3];
-                        result = inputNumber;
-                    }
-                    else
-                    {
-                        inputNumber = inputNumber.Replace(",", "");
-                        inputNumber = inputNumber.Replace("m", "");
-                        string[] parts = inputNumber.Split('.');
-                        inputNumber = parts[0] + parts[1] + "," + parts[2];
-                        result = inputNumber;
-                    }
-                }
+                caseInputLengthSixteenDigits(ref inputNumber, ref result, ref counterDots);
             }
 
             if (inputNumber.Length == 18)
             {
-                if (inputNumber.Contains("_"))
-                {
-                    inputNumber = replaceUnderScore(inputNumber);
-                    inputNumber = inputNumber.Replace(".",",");
+                caseInputLengthEighteenDigits(ref inputNumber, ref result, ref counterCommas);
+            }
 
-                    counterCommas = countCommas(inputNumber);
-                    if(counterCommas == 2)
-                    {
-                        string[] parts = inputNumber.Split(',');
-                        inputNumber = parts[0] + parts[1] + "," + parts[2];
-                    }
+            return result;
+        }
+        
+        private string handleSpecialCharacters(string inputNumber)
+        {
+            if (inputNumber.Contains("_"))
+            {
+                return handleUnderscores(inputNumber);
+            }
+            else
+            {
+                return handleDots(inputNumber);
+            }
+        }
+        
+        private string handleUnderscores(string inputNumber)
+        {
+            int counterUnderscore = countUnderScores(inputNumber);
+
+            inputNumber = replaceUnderScore(inputNumber); 
+
+            if (counterUnderscore == 4)
+            {
+                return inputNumber; 
+            }
+
+            if (counterUnderscore == 3)
+            {
+                return inputNumber.Replace('.', ','); 
+            }
+
+            return inputNumber; 
+        }
+        
+        private string handleDots(string inputNumber)
+        {
+            int counterDots = countDots(inputNumber);
+
+            if (counterDots == 3)
+            {
+                string[] parts = inputNumber.Split('.');
+                return parts[0].Replace(",", "") + parts[1] + parts[2] + "," + parts[3]; 
+            }
+
+            if (counterDots == 2)
+            {
+                string[] parts = inputNumber.Split(',');
+                return parts[0] + parts[1].Replace(".", "") + parts[2].Replace(".", ",");
+            }
+
+            return inputNumber;
+        }
+
+        private void caseInputLengthEighteenDigits(ref string inputNumber, ref string result, ref int counterCommas)
+        {
+            if (inputNumber.Contains("_"))
+            {
+                inputNumber = replaceUnderScore(inputNumber);
+                inputNumber = inputNumber.Replace(".", ",");
+
+                counterCommas = countCommas(inputNumber);
+                if (counterCommas == 2)
+                {
+                    string[] parts = inputNumber.Split(',');
+                    inputNumber = parts[0] + parts[1] + "," + parts[2];
+                }
+                result = inputNumber;
+            }
+        }
+
+        private void caseInputLengthSixteenDigits(ref string inputNumber, ref string result, ref int counterDots)
+        {
+            if (inputNumber.Contains("m"))
+            {
+                counterDots = countDots(inputNumber);
+                if (counterDots == 3)
+                {
+                    inputNumber = inputNumber.Replace("m", "");
+                    string[] parts = inputNumber.Split('.');
+                    inputNumber = parts[0].Replace(",", "") + parts[1] + parts[2] + "," + parts[3];
+                    result = inputNumber;
+                }
+                else
+                {
+                    inputNumber = inputNumber.Replace(",", "");
+                    inputNumber = inputNumber.Replace("m", "");
+                    string[] parts = inputNumber.Split('.');
+                    inputNumber = parts[0] + parts[1] + "," + parts[2];
+                    result = inputNumber;
+                }
+            }
+        }
+
+        private int caseInputLengthFourteenDigits(ref string inputNumber, ref string result, ref int counterDots)
+        {
+            int counterCommas = countCommas(inputNumber);
+            if (counterCommas == 2)
+            {
+                string[] parts = inputNumber.Split(',');
+                inputNumber = parts[0] + parts[1] + parts[2];
+                inputNumber = inputNumber.Replace(".", ",");
+                result = inputNumber;
+            }
+            else
+            {
+                counterDots = countDots(inputNumber);
+                if (counterDots == 2)
+                {
+                    string[] parts = inputNumber.Split('.');
+                    inputNumber = parts[0] + parts[1].Replace(",", "") + "," + parts[2];
                     result = inputNumber;
                 }
             }
 
+            return counterCommas;
+        }
+
+        private string caseInputLengthTenDigits(ref string inputNumber, ref int counterDots)
+        {
+            string result;
+            if (inputNumber.Contains("."))
+            {
+                counterDots = countDots(inputNumber);
+                //Console.WriteLine("counted dotS: " + counterDots);
+                if (counterDots == 0 || counterDots == 1)
+                {
+                    inputNumber = inputNumber.Replace(",", "");
+                    inputNumber = replaceDots(inputNumber);
+                }
+                else
+                {
+                    //Console.WriteLine("Dots:" + counterDots);
+                    string[] parts = inputNumber.Split('.');
+                    inputNumber = parts[0] + parts[1] + "," + parts[2];
+                }
+            }
+
+            result = simpleFormatConversition(inputNumber);
             return result;
         }
 
