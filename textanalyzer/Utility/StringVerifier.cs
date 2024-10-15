@@ -129,5 +129,28 @@ namespace TextAnalyzer.Utility
 
             return result;
         }
+
+        public Boolean isValidEmail(String inputEmail)
+        {
+            Boolean result = false;
+
+            if (string.IsNullOrWhiteSpace(inputEmail))
+            {
+                return result;
+            }
+            else
+            {                
+                string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+             
+                result = Regex.IsMatch(inputEmail, pattern, RegexOptions.IgnoreCase);
+                
+                //Regex work check domain!
+                //loademails 
+                //iterate over domains
+                //if domain found return true
+            }
+
+            return result;
+        }
     }
 }

@@ -126,5 +126,13 @@ namespace TextAnalyzer.utilitytests
             String giveInput = "I am not 64bit coded string!";
             ClassicAssert.False(strVerfier.isBase64Str(giveInput));
         }
+
+        [Test]
+        public void checkIfGivenEmailIsValid()
+        {
+            String validEmail = "valid@gmail.com";
+
+            ClassicAssert.True(strVerfier.isValidEmail(validEmail));
+        }
     }
 }
