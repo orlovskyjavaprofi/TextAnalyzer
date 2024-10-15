@@ -18,7 +18,7 @@ namespace TextAnalyzer.utilitytests
 
         
         [Test]
-        public void checkIfStringAppearancesCanBeCreatd()
+        public void checkIfStringAppearancesCanBeCreated()
         {
             ClassicAssert.NotNull(emailsLoader);
         }

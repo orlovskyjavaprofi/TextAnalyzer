@@ -14,7 +14,7 @@ namespace TextAnalyzer.utilitytests
         }
 
         [Test]
-        public void checkIfStringVerfierCanBeCreatd()
+        public void checkIfStringVerfierCanBeCreated()
         {
             ClassicAssert.NotNull(strVerfier);
         }
