@@ -100,5 +100,14 @@ namespace TextAnalyzer.utilitytests
 
             ClassicAssert.True(strAppearances.verify_words(testWords, testSentence));
         }
+
+        [Test]
+        public void checkIfOneWordMissingInTheSentenceSeparatedByQuestionDelimiter()
+        {
+            String testWords = "congress,hearing,faces";
+            String testSentence = "New?elected?president?faces?hearing";
+
+            ClassicAssert.False(strAppearances.verify_words(testWords, testSentence));
+        }
     }
 }
