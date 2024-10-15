@@ -96,7 +96,38 @@ namespace TextAnalyzer.Utility
                 
             }
             return result;
+        }
 
+        public Boolean isBase64Str(String input)
+        {
+            Boolean result = false;
+
+            if (string.IsNullOrEmpty(input))
+            {
+                return result;
+            }
+            else
+            {
+                if (input.Length % 4 != 0)
+                {
+                    return result;
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(input, @"^[a-zA-Z0-9\+/]*={0,3}$", System.Text.RegularExpressions.RegexOptions.None))
+                {
+                    return result;
+                }
+                try
+                {
+                    byte[] buffer = Convert.FromBase64String(input);
+                    result = true; 
+                }
+                catch (FormatException)
+                {
+                    return result;
+                }
+            }
+
+            return result;
         }
     }
 }

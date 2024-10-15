@@ -113,5 +113,18 @@ namespace TextAnalyzer.utilitytests
             ClassicAssert.AreEqual(result, strVerfier.count_many_letter_in_word(letters, givenInput));
         }
 
+        [Test]
+        public void checkIfGivenStringAB64Code()
+        {
+            String giveInput = "d7UTz8x29Xny7GyQqy2fUQ==";
+            ClassicAssert.True(strVerfier.isBase64Str(giveInput));
+        }
+
+        [Test]
+        public void checkIfGivenStringNotAB64Code()
+        {
+            String giveInput = "I am not 64bit coded string!";
+            ClassicAssert.False(strVerfier.isBase64Str(giveInput));
+        }
     }
 }

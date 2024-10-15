@@ -155,5 +155,6 @@ namespace TextAnalyzer.utilitytests
 
             ClassicAssert.False(strAppearances.verify_many_letters(givenManyLetters, givenWord));
         }
+        
     }
 }
