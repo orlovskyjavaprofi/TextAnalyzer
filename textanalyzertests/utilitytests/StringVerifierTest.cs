@@ -134,5 +134,21 @@ namespace TextAnalyzer.utilitytests
 
             ClassicAssert.True(strVerfier.isValidEmail(validEmail));
         }
+
+        [Test]
+        public void checkIfGivenEmailIsNonValid()
+        {
+            String validEmail = "valid@faker.com";
+
+            ClassicAssert.False(strVerfier.isValidEmail(validEmail));
+        }
+
+        [Test]
+        public void checkIfGivenEmailEmptyValid()
+        {
+            String validEmail = "";
+
+            ClassicAssert.False(strVerfier.isValidEmail(validEmail));
+        }
     }
 }

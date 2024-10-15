@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.Metrics;
+﻿using System.Collections;
+using System.Diagnostics.Metrics;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -143,11 +144,23 @@ namespace TextAnalyzer.Utility
                 string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
              
                 result = Regex.IsMatch(inputEmail, pattern, RegexOptions.IgnoreCase);
+
+                if (result.Equals(true)) { 
+                    EmailsLoader emailLoader = new EmailsLoader();
+                    ArrayList validEmailDomains = emailLoader.loadEmailDomainsList();
+                    
+                    string[] emailParts = inputEmail.Split('@');
+                    string emailDomain = emailParts[1].ToLower();
+
+                    if (validEmailDomains.Contains(emailDomain) == true)
+                    {
+                        result = true;
+                    }
+                    else {
+                        result = false;
+                    }
+                }
                 
-                //Regex work check domain!
-                //loademails 
-                //iterate over domains
-                //if domain found return true
             }
 
             return result;
