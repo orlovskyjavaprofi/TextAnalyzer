@@ -49,8 +49,47 @@ namespace TextAnalyzer.Utility
                 }
                 return result;
             }
-
         }
 
+        public Boolean verify_letter(Char letter, String input)
+        {
+            Boolean result = false;
+
+            if (string.IsNullOrEmpty(input))
+            {
+                return result;
+            }
+            else
+            {
+                result = input.Contains(letter);
+            }
+
+            return result;
+        }
+
+        public Boolean verify_many_letters(String givenManyLetters, String givenWord)
+        {
+            Boolean result = false;
+            
+            if (string.IsNullOrEmpty(givenManyLetters) || string.IsNullOrEmpty(givenWord))
+            {
+                return result; 
+            }
+
+            foreach (char letter in givenManyLetters)
+            {
+                
+                if (verify_letter(letter, givenWord))
+                {                                                                    
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+
+            return result; 
+        }
     }
 }

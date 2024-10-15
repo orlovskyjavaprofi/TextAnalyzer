@@ -109,5 +109,51 @@ namespace TextAnalyzer.utilitytests
 
             ClassicAssert.False(strAppearances.verify_words(testWords, testSentence));
         }
+
+        [Test]
+        public void checkIfLetterOccureInGivenWord()
+        {
+            Char givenletter = 'U';
+            String givenWord = "USA";
+
+            ClassicAssert.True(strAppearances.verify_letter(givenletter, givenWord));
+        }
+
+        [Test]
+        public void checkIfLetterNotOccureInGivenWord()
+        {
+            Char givenletter = 'B';
+            String givenWord = "USA";
+
+            ClassicAssert.False(strAppearances.verify_letter(givenletter, givenWord));
+        }
+
+        [Test]
+        public void checkIfManyLettersOccureInGivenWord()
+        {
+            String givenManyLetters = "M,A,G,A";
+            String givenWord = "MakeAmericaGreatAgain";
+
+            ClassicAssert.True(strAppearances.verify_many_letters(givenManyLetters, givenWord));
+        }
+
+
+        [Test]
+        public void checkIfNotAllLettersOccureInGivenWord()
+        {
+            String givenManyLetters = "M,Z";
+            String givenWord = "MakeAmericaGreatAgain";
+
+            ClassicAssert.False(strAppearances.verify_many_letters(givenManyLetters, givenWord));
+        }
+
+        [Test]
+        public void checkIfAllLettersNotGiven()
+        {
+            String givenManyLetters = "";
+            String givenWord = "MakeAmericaGreatAgain";
+
+            ClassicAssert.False(strAppearances.verify_many_letters(givenManyLetters, givenWord));
+        }
     }
 }
