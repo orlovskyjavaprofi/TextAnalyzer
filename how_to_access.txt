@@ -16,4 +16,6 @@ YourInput: is what you want to send to server
 Example: http://localhost:5183/api/ControllerStringVerifier/count-words?message=Welcome to a simple webservice
 you will see the result in your browser or postman, which in  this case would be a json response 5.
 
+If you need to provide more then one input use & for example ip:port/api/ControllerStringAppearances/verify-many-letters?letters=T,E,S&message=TEST
+
 For more info review the Controller C# classes in textanalyzert and Unit test in separate directory called textanalyzertests
