@@ -6,7 +6,7 @@ First you need to run the server from the .Net Application directory called text
 
 Once started it will give you access, then you use it via webbrowser or postman.
 
-Copy the ipadress:port combination from the console where you started the servern and then use it in webbrowser or postman like following:
+Copy the ipadress:port combination from the console where you started the server and then use it in webbrowser or postman like following:
 ipadress:port/api/NameOfController/nameOfEndPoint?message=YourInput
 
 Name of controller: is the name of controller where all endpoints are defined
