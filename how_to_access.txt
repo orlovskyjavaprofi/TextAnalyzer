@@ -1,0 +1,19 @@
+
+Each endpoint of this server can be reached as following
+==========================================================
+
+First you need to run the server from the .Net Application directory called textanalyzer: dotnet run
+
+Once started it will give you access, then you use it via webbrowser or postman.
+
+Copy the ipadress:port combination from the console where you started the servern and then use it in webbrowser or postman like following:
+ipadress:port/api/NameOfController/nameOfEndPoint?message=YourInput
+
+Name of controller: is the name of controller where all endpoints are defined
+Name of endpoint: is the name of the endpoint which you want to use
+YourInput: is what you want to send to server
+
+Example: http://localhost:5183/api/ControllerStringVerifier/count-words?message=Welcome to a simple webservice
+you will see the result in your browser or postman, which in  this case would be a json response 5.
+
+For more info review the Controller C# classes in textanalyzert and Unit test in separate directory called textanalyzertests
